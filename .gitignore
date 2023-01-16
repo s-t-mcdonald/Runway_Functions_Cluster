@@ -1,0 +1,10 @@
+NN_Data
+open_submission_format.csv
+open_train_labels
+processed_data
+Results
+test_data
+trained_models
+trained_submodels
+training_data
+evaluation_test_labels.csv
