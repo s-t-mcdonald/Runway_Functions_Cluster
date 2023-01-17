@@ -30,9 +30,9 @@ def train_airport_nn(airport, lookahead, Data_Type, MCS, epochs, number_trials, 
 
     df = pd.read_csv(f"{PROCESSED_DATA_DIR}/{airport}/{airport}_processed_data.csv",index_col=0)
     
-    X_train = np.genfromtxt(f"NN_Data/{Data_Type}/{airport}/{airport}_train_data.csv", delimiter=',')
-    X_val = np.genfromtxt(f"NN_Data/{Data_Type}/{airport}/{airport}_val_data.csv", delimiter=',')
-    X_test = np.genfromtxt(f"NN_Data/{Data_Type}/{airport}/{airport}_test_data.csv", delimiter=',')
+    X_train = np.genfromtxt(Dir+f"NN_Data/{Data_Type}/{airport}/{airport}_train_data.csv", delimiter=',')
+    X_val = np.genfromtxt(Dir+f"NN_Data/{Data_Type}/{airport}/{airport}_val_data.csv", delimiter=',')
+    X_test = np.genfromtxt(Dir+f"NN_Data/{Data_Type}/{airport}/{airport}_test_data.csv", delimiter=',')
 
     labels = CONFIGS[airport]
 
@@ -65,9 +65,9 @@ def train_airport_nn(airport, lookahead, Data_Type, MCS, epochs, number_trials, 
     val_pred = best_model.predict(X_val)
     test_pred = best_model.predict(X_test)
 
-    train_pred = np.clip(train_pred, 1e-16, 1-1e-16)
-    val_pred = np.clip(val_pred, 1e-16, 1-1e-16)
-    test_pred = np.clip(test_pred, 1e-16, 1-1e-16)
+    train_pred = np.clip(train_pred, 1e-8, 1-1e-8)
+    val_pred = np.clip(val_pred, 1e-8, 1-1e-8)
+    test_pred = np.clip(test_pred, 1e-8, 1-1e-8)
 
     y_train = to_cat(y_train, Num_Classes)
     y_val   = to_cat(y_val, Num_Classes)
@@ -97,11 +97,11 @@ def train_airport_nn(airport, lookahead, Data_Type, MCS, epochs, number_trials, 
 #         train_airport_nn(airport, MCS)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    MCS = True
+#     MCS = True
 
-    train_final_model(MCS)
+#     train_final_model(MCS)
 
     
             

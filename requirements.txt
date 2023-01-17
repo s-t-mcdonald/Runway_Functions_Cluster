@@ -8,3 +8,4 @@ six==1.16.0
 tensorflow==2.8.0
 typer==0.4.2
 xgboost==1.5.2
+protobuf==3.20.*

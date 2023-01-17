@@ -1,8 +1,9 @@
-TRAINING_DATA_DIR     = "training_data"
-TEST_DATA_DIR     = "test_data"
-PROCESSED_DATA_DIR     = "processed_data"
-MODEL_DIR = "trained_models"
-SUBMODEL_DIR = "trained_submodels"
+DIR = ""
+TRAINING_DATA_DIR     = DIR+"training_data"
+TEST_DATA_DIR     = DIR+"test_data"
+PROCESSED_DATA_DIR     = DIR+"processed_data"
+MODEL_DIR = DIR+"trained_models"
+SUBMODEL_DIR = DIR+"trained_submodels"
 
 """THE BELOW ARE IN THEIR RESPECTIVE AIRPORT DIRECTORY WITHIN DATA_DIR"""
 
