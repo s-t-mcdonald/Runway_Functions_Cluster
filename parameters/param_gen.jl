@@ -17,11 +17,11 @@ LOOKAHEAD = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 
 # Modeling Parameters
-DATA            = ["PD", "SM", "PD+SM"]
+DATA            = ["PD", "SM", "PD_SM"]
 CONFIG_SUPPORT  = [0, 1]
 
 EPOCHS          = [200]
-NUMBER_TRIALS   = [50]
+NUMBER_TRIALS   = [3]
 PATIENCE        = [30]
 
 param_df    = DataFrame(PARAM = Int64[], AIRPORTS = String[], LOOKAHEAD = Int64[], DATA = String[], CONFIG_SUPPORT = Int64[],

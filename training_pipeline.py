@@ -21,7 +21,10 @@ epochs              = parameter_array.loc[experiment_id]["EPOCHS"]
 number_trials       = parameter_array.loc[experiment_id]["NUMBER_TRIALS"]
 patience            = parameter_array.loc[experiment_id]["PATIENCE"]
 
-os.mkdir(Dir+f"Results/Result_{experiment_id}")
+try:
+    os.mkdir(Dir+f"Results/Result_{experiment_id}")
+except:
+    None
 y_train, y_val, y_test, train_pred, val_pred, test_pred = train_airport_nn(airport, lookahead, data, config_support, epochs, number_trials, patience, experiment_id, Dir)
 
 np.savetxt(Dir+f"Results/Result_{experiment_id}/y_train_truth.csv", y_train, delimiter=",")

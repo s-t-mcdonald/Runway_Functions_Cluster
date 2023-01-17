@@ -9,7 +9,7 @@ training_data
 evaluation_test_labels.csv
 NN_Data.zip
 open_train_labels.csv.bz2
-NN_Data_
+NN_Data
 processed_data.zip
 *.zip
 
