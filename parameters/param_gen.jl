@@ -21,7 +21,7 @@ DATA            = ["PD", "SM", "PD+SM"]
 CONFIG_SUPPORT  = [0, 1]
 
 EPOCHS          = [200]
-NUMBER_TRIALS   = [5]
+NUMBER_TRIALS   = [50]
 PATIENCE        = [30]
 
 param_df    = DataFrame(PARAM = Int64[], AIRPORTS = String[], LOOKAHEAD = Int64[], DATA = String[], CONFIG_SUPPORT = Int64[],
