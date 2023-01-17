@@ -105,7 +105,7 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     else:
         output_node = ak.ClassificationHead()(output_node)
 
-    project_name = Dir + f"Results/Result_{experiment_id}/automodel"
+    project_name = Dir + f"Results/ToDelete/Result_{experiment_id}/automodel"
     clf = ak.AutoModel(
         project_name=project_name, inputs=input_node, 
         outputs=output_node, loss=binary_loss, overwrite=True, max_trials=number_trials
