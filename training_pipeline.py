@@ -8,7 +8,7 @@ from src.feature_processing_functions import *
 
 from src.nn_pipeline import train_airport_nn
 
-experiment_id = 2#int(sys.argv[1])
+experiment_id = int(sys.argv[1])
 
 Dir = DIR
 parameter_array = pd.read_csv(Dir+"parameters/parameter_array.csv").set_index('PARAM')

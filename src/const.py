@@ -1,4 +1,4 @@
-DIR = ""
+DIR = "/home/mcdonst/Runway_Functions_Cluster/"
 TRAINING_DATA_DIR     = DIR+"training_data"
 TEST_DATA_DIR     = DIR+"test_data"
 PROCESSED_DATA_DIR     = DIR+"processed_data"
