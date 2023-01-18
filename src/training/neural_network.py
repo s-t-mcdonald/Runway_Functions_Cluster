@@ -114,6 +114,6 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     )
 
     # Train Model and Fit Best Hyperparemters
-    clf.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, verbose=0, callbacks=cbs)
+    clf.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, verbose=1, callbacks=cbs)
 
     return clf
