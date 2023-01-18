@@ -42,7 +42,7 @@ train_f1 = f1_score(np.argmax(y_train,axis=1), np.argmax(train_pred,axis=1), ave
 val_f1 = f1_score(np.argmax(y_val,axis=1), np.argmax(val_pred,axis=1), average='weighted')
 test_f1 = f1_score(np.argmax(y_test,axis=1), np.argmax(test_pred,axis=1), average='weighted')
 
-df_dict = {"train_loss": [train_loss], "val_loss": [val_loss], "test_loss": [test_loss],
+df_dict = {"param": [experiment_id], "train_loss": [train_loss], "val_loss": [val_loss], "test_loss": [test_loss],
                 "train_accuracy": [train_accuracy], "val_accuracy": [val_accuracy], "test_accuracy": [test_accuracy],
                 "train_f1": [train_f1], "val_f1": [val_f1], "test_f1": [test_f1]}
 

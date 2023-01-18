@@ -100,12 +100,14 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     output_node = ak.Normalization()(input_node)
     output_node = ak.DenseBlock()(output_node)
 
-    if MCS == 1:
+    if MCS > 0.5:
+        print("Using MCS\n")
         output_node = final_layer()([output_node, input_node])
     else:
+        print("Not Using MCS\n")
         output_node = ak.ClassificationHead()(output_node)
 
-    project_name = Dir + f"Results/ToDelete/Result_{experiment_id}/automodel"
+    project_name = Dir + f"ToDelete/Result_{experiment_id}/automodel"
     clf = ak.AutoModel(
         project_name=project_name, inputs=input_node, 
         outputs=output_node, loss=binary_loss, overwrite=True, max_trials=number_trials
