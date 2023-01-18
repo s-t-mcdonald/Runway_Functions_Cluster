@@ -36,7 +36,7 @@ def past_final_layer(airport, lookahead):
             if self.dropout is not None:
                 dropout = self.dropout
             else:
-                dropout = hp.Choice("dropout", [0.0, 0.25, 0.5], default=0)
+                dropout = hp.Choice("dropout", [0.0, 0.25, 0.5], default=0.5)
 
             if dropout > 0:
                 output_node = Dropout(dropout)(output_node)
@@ -49,7 +49,7 @@ def past_final_layer(airport, lookahead):
                 output_node = Softmax(name=self.name)(output_node)
 
             min_support = hp.Choice("min_support", [0.0001], default=0.0001)
-            config_support = hp.Float("config_support", min_value=0.1, max_value=0.97, default=0.9*CONFIG_SUPPORT_DEFAULTS[airport][lookahead])
+            config_support = hp.Float("config_support", min_value=0.1, max_value=0.97, default=0.8*CONFIG_SUPPORT_DEFAULTS[airport][lookahead])
 
             ## Miniumum Support and Minimum Config Support ##
             y_pred = output_node
@@ -98,7 +98,7 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     ## Autokeras Training Routine ##
     input_node = ak.Input()
     output_node = ak.Normalization()(input_node)
-    output_node = ak.DenseBlock()(output_node)
+    output_node = ak.DenseBlock(dropout=0.5)(output_node)
 
     if MCS > 0.5:
         print("Using MCS\n")

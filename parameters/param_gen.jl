@@ -20,9 +20,9 @@ LOOKAHEAD = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 DATA            = ["PD", "SM", "PD_SM"]
 CONFIG_SUPPORT  = [0, 1]
 
-EPOCHS          = [200]
-NUMBER_TRIALS   = [3]
-PATIENCE        = [30]
+EPOCHS          = [400]
+NUMBER_TRIALS   = [1]
+PATIENCE        = [10]
 
 param_df    = DataFrame(PARAM = Int64[], AIRPORTS = String[], LOOKAHEAD = Int64[], DATA = String[], CONFIG_SUPPORT = Int64[],
                         EPOCHS = Int64[], NUMBER_TRIALS = Int64[], PATIENCE = Int64[])
