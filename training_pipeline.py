@@ -11,7 +11,7 @@ def init_worker():
 param_array = pd.read_csv("parameters/parameter_array.csv")
 
 
-EXPERIMENT_IDS = [1,2,3]#param_array.PARAM
+EXPERIMENT_IDS = param_array.PARAM
 
 
 pool = multiprocessing.Pool(10, init_worker)
