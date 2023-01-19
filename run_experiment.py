@@ -30,10 +30,12 @@ def run_experiment(experiment_id):
 
     try:
         pd.read_csv(Dir+f"Results/Result_{experiment_id}/results_df.csv")
-    except:
         print("File Exists\n")
         return None
+    except:
+        None
         
+
     y_train, y_val, y_test, train_pred, val_pred, test_pred = train_airport_nn(airport, lookahead, data, config_support, epochs, number_trials, patience, experiment_id, Dir)
 
 
