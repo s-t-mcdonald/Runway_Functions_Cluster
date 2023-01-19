@@ -116,7 +116,11 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     # Train Model and Fit Best Hyperparemters
     clf.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, verbose=1, callbacks=cbs)
 
-    opt_config_support = clf.tuner.get_best_hyperparameters()[0].values["final_layer_1/config_support"]
+    try:
+        opt_config_support = clf.tuner.get_best_hyperparameters()[0].values["final_layer_1/config_support"]
+    except:
+        opt_config_support = np.nan
+    
     norm_support = CONFIG_SUPPORT_DEFAULTS[airport][lookahead]
 
 
