@@ -98,22 +98,28 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     ## Autokeras Training Routine ##
     input_node = ak.Input()
     output_node = ak.Normalization()(input_node)
-    output_node = ak.DenseBlock(dropout=0.5)(output_node)
+    output_node = ak.DenseBlock(num_layers=2,num_units=256,use_batchnorm=False,dropout=0.5)(output_node)
 
     if MCS > 0.5:
         print("Using MCS\n")
-        output_node = final_layer()([output_node, input_node])
+        output_node = final_layer(dropout=0.1)([output_node, input_node])
     else:
         print("Not Using MCS\n")
-        output_node = ak.ClassificationHead()(output_node)
+        output_node = ak.ClassificationHead(dropout=0.1)(output_node)
 
     project_name = Dir + f"ToDelete/Result_{experiment_id}/automodel"
     clf = ak.AutoModel(
         project_name=project_name, inputs=input_node, 
-        outputs=output_node, loss=binary_loss, overwrite=True, max_trials=number_trials
+        outputs=output_node, loss=binary_loss, overwrite=True, max_trials=number_trials, optimizer="adam", tuner="hyperband"
     )
 
     # Train Model and Fit Best Hyperparemters
     clf.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, verbose=1, callbacks=cbs)
 
-    return clf
+    opt_config_support = clf.tuner.get_best_hyperparameters()[0].values["final_layer_1/config_support"]
+    norm_support = CONFIG_SUPPORT_DEFAULTS[airport][lookahead]
+
+
+
+
+    return clf, norm_support, opt_config_support

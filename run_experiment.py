@@ -35,9 +35,7 @@ def run_experiment(experiment_id):
     except:
         None
         
-
-    y_train, y_val, y_test, train_pred, val_pred, test_pred = train_airport_nn(airport, lookahead, data, config_support, epochs, number_trials, patience, experiment_id, Dir)
-
+    y_train, y_val, y_test, train_pred, val_pred, test_pred, norm_support, config_support = train_airport_nn(airport, lookahead, data, config_support, epochs, number_trials, patience, experiment_id, Dir)
 
     train_loss = log_loss(y_train.flatten(), train_pred.flatten())
     val_loss = log_loss(y_val.flatten(), val_pred.flatten())
@@ -53,7 +51,8 @@ def run_experiment(experiment_id):
 
     df_dict = {"param": [experiment_id], "train_loss": [train_loss], "val_loss": [val_loss], "test_loss": [test_loss],
                     "train_accuracy": [train_accuracy], "val_accuracy": [val_accuracy], "test_accuracy": [test_accuracy],
-                    "train_f1": [train_f1], "val_f1": [val_f1], "test_f1": [test_f1]}
+                    "train_f1": [train_f1], "val_f1": [val_f1], "test_f1": [test_f1],
+                    "norm_support": [norm_support], "config_support": [config_support]}
 
     df = pd.DataFrame(df_dict)
 

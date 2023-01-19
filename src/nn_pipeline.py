@@ -55,7 +55,7 @@ def train_airport_nn(airport, lookahead, Data_Type, MCS, epochs, number_trials, 
     y_val = return_labels(y_val, labels)
     y_test = return_labels(y_test, labels)
 
-    clf_new = train_neural_network(X_train, to_cat(y_train, Num_Classes),  X_val, to_cat(y_val, Num_Classes), airport, lookahead, MCS, epochs, number_trials, patience, experiment_id, Dir)
+    clf_new, norm_support, opt_config_support = train_neural_network(X_train, to_cat(y_train, Num_Classes),  X_val, to_cat(y_val, Num_Classes), airport, lookahead, MCS, epochs, number_trials, patience, experiment_id, Dir)
     
     best_model = clf_new.export_model()
 
@@ -84,7 +84,7 @@ def train_airport_nn(airport, lookahead, Data_Type, MCS, epochs, number_trials, 
     print(f"Airport: {airport} | Lookahead: {lookahead} | Train Loss: {train_loss} | Val Loss: {val_loss} | Test Loss: {test_loss}")
     print("\n"+100*"*"+"\n")
 
-    return y_train, y_val, y_test, train_pred, val_pred, test_pred
+    return y_train, y_val, y_test, train_pred, val_pred, test_pred, norm_support, opt_config_support
 
 
 
