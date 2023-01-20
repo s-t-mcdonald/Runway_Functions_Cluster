@@ -14,5 +14,5 @@ param_array = pd.read_csv("parameters/parameter_array.csv")
 EXPERIMENT_IDS = param_array.PARAM
 
 
-pool = multiprocessing.Pool(16, init_worker)
+pool = multiprocessing.Pool(30, init_worker)
 pool.map(run_experiment, EXPERIMENT_IDS)
