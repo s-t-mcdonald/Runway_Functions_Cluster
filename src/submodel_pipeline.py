@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score, auc, roc_curve, log_loss
 import json
 import multiprocessing
 import signal
+import os
 
 from src.const import *
 from src.submodel_preparators import *
@@ -31,49 +32,54 @@ def train_submodels(airport):
 
     df = pd.read_csv(f"{PROCESSED_DATA_DIR}/{airport}/{airport}_processed_data.csv",index_col=0)
 
+    try:
+        os.mkdir(f"{SUBMODEL_DIR}/{airport}")
+    except:
+        None
+
     k = 1
     for i in range(1,13):
         
 
-        for dep_rway in DEP_RWAYS[airport]:
-            model_id = f"submodel_{k}"
-            flag = try_to_load_submodel(airport,model_id)
-            if flag:
-                k = k + 1
-                continue
-            model_name = f"BinaryRway_SingleLookahead_{i}_submodel"
-            binary_rway_preparator = BinaryRwayDataPreparator(df,airport,lookahead=i,rway=dep_rway,operation='departure')
-            preparator_description = binary_rway_preparator.describe_parameters()
-            preparator_description['model_name'] = model_name
-            model = XGBClassifier(objective ='binary:logistic', eval_metric = "auc", verbosity = 0)
-            model.fit(binary_rway_preparator.train_features_df,binary_rway_preparator.y_train, early_stopping_rounds=10, eval_set=[(binary_rway_preparator.val_features_df,binary_rway_preparator.y_val)])
-            predictions = model.predict_proba(binary_rway_preparator.val_features_df)
-            fpr,tpr,thresholds = roc_curve(binary_rway_preparator.val_labels,predictions[:,1])
-            model.save_model(f"{SUBMODEL_DIR}/{airport}/{model_id}")
-            with open(f"{SUBMODEL_DIR}/{airport}/{model_id}_description.json", "w") as outfile:
-                json.dump(preparator_description, outfile)
-            print(preparator_description['reference'],i,auc(fpr,tpr))
-            k+=1
+        # for dep_rway in DEP_RWAYS[airport]:
+        #     model_id = f"submodel_{k}"
+        #     flag = try_to_load_submodel(airport,model_id)
+        #     if flag:
+        #         k = k + 1
+        #         continue
+        #     model_name = f"BinaryRway_SingleLookahead_{i}_submodel"
+        #     binary_rway_preparator = BinaryRwayDataPreparator(df,airport,lookahead=i,rway=dep_rway,operation='departure')
+        #     preparator_description = binary_rway_preparator.describe_parameters()
+        #     preparator_description['model_name'] = model_name
+        #     model = XGBClassifier(objective ='binary:logistic', eval_metric = "auc", verbosity = 0)
+        #     model.fit(binary_rway_preparator.train_features_df,binary_rway_preparator.y_train, early_stopping_rounds=10, eval_set=[(binary_rway_preparator.val_features_df,binary_rway_preparator.y_val)])
+        #     predictions = model.predict_proba(binary_rway_preparator.val_features_df)
+        #     fpr,tpr,thresholds = roc_curve(binary_rway_preparator.val_labels,predictions[:,1])
+        #     model.save_model(f"{SUBMODEL_DIR}/{airport}/{model_id}")
+        #     with open(f"{SUBMODEL_DIR}/{airport}/{model_id}_description.json", "w") as outfile:
+        #         json.dump(preparator_description, outfile)
+        #     print(preparator_description['reference'],i,auc(fpr,tpr))
+        #     k+=1
 
-        for arr_rway in ARR_RWAYS[airport]:
-            model_id = f"submodel_{k}"
-            flag = try_to_load_submodel(airport,model_id)
-            if flag:
-                k = k + 1
-                continue
-            model_name = f"BinaryRway_SingleLookahead_{i}_submodel"
-            binary_rway_preparator = BinaryRwayDataPreparator(df,airport,lookahead=i,rway=arr_rway,operation='arrival')
-            preparator_description = binary_rway_preparator.describe_parameters()
-            preparator_description['model_name'] = model_name
-            model = XGBClassifier(objective ='binary:logistic', eval_metric = "auc", verbosity = 0)
-            model.fit(binary_rway_preparator.train_features_df,binary_rway_preparator.y_train, early_stopping_rounds=10, eval_set=[(binary_rway_preparator.val_features_df,binary_rway_preparator.y_val)])
-            predictions = model.predict_proba(binary_rway_preparator.val_features_df)
-            fpr,tpr,thresholds = roc_curve(binary_rway_preparator.val_labels,predictions[:,1])
-            model.save_model(f"{SUBMODEL_DIR}/{airport}/{model_id}")
-            with open(f"{SUBMODEL_DIR}/{airport}/{model_id}_description.json", "w") as outfile:
-                json.dump(preparator_description, outfile)
-            print(preparator_description['reference'],i,auc(fpr,tpr))
-            k+=1
+        # for arr_rway in ARR_RWAYS[airport]:
+        #     model_id = f"submodel_{k}"
+        #     flag = try_to_load_submodel(airport,model_id)
+        #     if flag:
+        #         k = k + 1
+        #         continue
+        #     model_name = f"BinaryRway_SingleLookahead_{i}_submodel"
+        #     binary_rway_preparator = BinaryRwayDataPreparator(df,airport,lookahead=i,rway=arr_rway,operation='arrival')
+        #     preparator_description = binary_rway_preparator.describe_parameters()
+        #     preparator_description['model_name'] = model_name
+        #     model = XGBClassifier(objective ='binary:logistic', eval_metric = "auc", verbosity = 0)
+        #     model.fit(binary_rway_preparator.train_features_df,binary_rway_preparator.y_train, early_stopping_rounds=10, eval_set=[(binary_rway_preparator.val_features_df,binary_rway_preparator.y_val)])
+        #     predictions = model.predict_proba(binary_rway_preparator.val_features_df)
+        #     fpr,tpr,thresholds = roc_curve(binary_rway_preparator.val_labels,predictions[:,1])
+        #     model.save_model(f"{SUBMODEL_DIR}/{airport}/{model_id}")
+        #     with open(f"{SUBMODEL_DIR}/{airport}/{model_id}_description.json", "w") as outfile:
+        #         json.dump(preparator_description, outfile)
+        #     print(preparator_description['reference'],i,auc(fpr,tpr))
+        #     k+=1
         
         # for rway in RWAYS[airport]:
         #     model_id = f"submodel_{k}"
@@ -97,7 +103,7 @@ def train_submodels(airport):
 
 
 
-        for c in list(CONFIGS[airport].keys())[:10]:
+        for c in list(CONFIGS[airport].keys())[:4]:
             model_id = f"submodel_{k}"
             flag = try_to_load_submodel(airport,model_id)
             if flag:
@@ -197,17 +203,18 @@ def train_submodels(airport):
 
 def train_all_submodels():
 
-    pool = multiprocessing.Pool(10, init_worker)
-    pool.map(train_submodels, AIRPORTS)
-    train_submodels()
+    for airport in AIRPORTS:
+        train_submodels(airport)
+
+    # pool = multiprocessing.Pool(10, init_worker)
+    # pool.map(train_submodels, AIRPORTS)
+    # train_submodels()
 
     
 
 if __name__ == "__main__":
 
-    pool = multiprocessing.Pool(10, init_worker)
-    pool.map(train_submodels, AIRPORTS)
-    train_submodels()
+    train_all_submodels()
 
     
 
