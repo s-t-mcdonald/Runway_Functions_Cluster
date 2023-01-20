@@ -98,7 +98,7 @@ def train_neural_network(X_train, y_train, X_val, y_val, airport, lookahead, MCS
     ## Autokeras Training Routine ##
     input_node = ak.Input()
     output_node = ak.Normalization()(input_node)
-    output_node = ak.DenseBlock(num_layers=2,num_units=256,use_batchnorm=False,dropout=0.5)(output_node)
+    output_node = ak.DenseBlock(num_layers=2,num_units=256,use_batchnorm=False,dropout=0.8)(output_node)
 
     if MCS > 0.5:
         print("Using MCS\n")
